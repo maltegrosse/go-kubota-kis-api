@@ -26,17 +26,17 @@ type Shape struct {
 }
 
 // GetFieldByMobilePhone retrieves field information by mobile phone number.
-func (k *kubota) GetFieldByMobilePhone(mobilePhone string) ([]Field, error) {
+func (k *Kubota) GetFieldByMobilePhone(mobilePhone string) ([]Field, error) {
 	return k.getField("mobilePhone", mobilePhone)
 }
 
 // GetFieldByUserName retrieves field information by username.
-func (k *kubota) GetFieldByUserName(userName string) ([]Field, error) {
+func (k *Kubota) GetFieldByUserName(userName string) ([]Field, error) {
 	return k.getField("userName", userName)
 }
 
 // getField is a helper function to retrieve field information based on a given field.
-func (k *kubota) getField(f, value string) ([]Field, error) {
+func (k *Kubota) getField(f, value string) ([]Field, error) {
 	// Construct the request URL
 	apiURL := fmt.Sprintf("%s/api/v1/field?%s=%s", k.authentication.Endpoint, f, value)
 

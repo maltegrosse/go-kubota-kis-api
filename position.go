@@ -8,7 +8,6 @@ import (
 	"time"
 )
 
-
 // Position represents the Position information returned by the Kubota API.
 type Position struct {
 	MachineUUID string     `json:"MachineUUID"`
@@ -21,37 +20,37 @@ type Position struct {
 }
 
 // GetLastPositionByMobilePhone retrieves the last position information by mobile phone number.
-func (k *kubota) GetLastPositionByMobilePhone(mobilePhone string, subscription string) (*Position, error) {
+func (k *Kubota) GetLastPositionByMobilePhone(mobilePhone string, subscription string) (*Position, error) {
 	return k.getPosition("mobilePhone", mobilePhone, subscription)
 }
 
 // GetLastPositionByUserName retrieves the last position information by username.
-func (k *kubota) GetLastPositionByUserName(userName string, subscription string) (*Position, error) {
+func (k *Kubota) GetLastPositionByUserName(userName string, subscription string) (*Position, error) {
 	return k.getPosition("userName", userName, subscription)
 }
 
 // GetLastPositionByMachineUUID retrieves the last position information by machine UUID.
-func (k *kubota) GetLastPositionByMachineUUID(machineUUID string, subscription string) (*Position, error) {
+func (k *Kubota) GetLastPositionByMachineUUID(machineUUID string, subscription string) (*Position, error) {
 	return k.getPosition("machineUUID", machineUUID, subscription)
 }
 
 // GetHistoricalPositionByMobilePhone retrieves historical position information by mobile phone number.
-func (k *kubota) GetHistoricalPositionByMobilePhone(mobilePhone, subscription string, startDate, endDate time.Time) ([]Position, error) {
+func (k *Kubota) GetHistoricalPositionByMobilePhone(mobilePhone, subscription string, startDate, endDate time.Time) ([]Position, error) {
 	return k.getPositions("mobilePhone", mobilePhone, subscription, startDate, endDate)
 }
 
 // GetHistoricalPositionByUserName retrieves historical position information by username.
-func (k *kubota) GetHistoricalPositionByUserName(userName, subscription string, startDate, endDate time.Time) ([]Position, error) {
+func (k *Kubota) GetHistoricalPositionByUserName(userName, subscription string, startDate, endDate time.Time) ([]Position, error) {
 	return k.getPositions("userName", userName, subscription, startDate, endDate)
 }
 
 // GetHistoricalPositionByMachineUUID retrieves historical position information by machine UUID.
-func (k *kubota) GetHistoricalPositionByMachineUUID(machineUUID, subscription string, startDate, endDate time.Time) ([]Position, error) {
+func (k *Kubota) GetHistoricalPositionByMachineUUID(machineUUID, subscription string, startDate, endDate time.Time) ([]Position, error) {
 	return k.getPositions("machineUUID", machineUUID, subscription, startDate, endDate)
 }
 
 // getPosition is a helper function to retrieve position information based on a given field.
-func (k *kubota) getPosition(field, value, subscription string) (*Position, error) {
+func (k *Kubota) getPosition(field, value, subscription string) (*Position, error) {
 	// Construct the request URL
 	apiURL := fmt.Sprintf("%s/api/v1/position?%s=%s", k.authentication.Endpoint, field, value)
 	if subscription != "" {
@@ -95,7 +94,7 @@ func (k *kubota) getPosition(field, value, subscription string) (*Position, erro
 }
 
 // getPosition is a helper function to retrieve position information based on a given field.
-func (k *kubota) getPositions(field, value, subscription string, startDate, endDate time.Time) ([]Position, error) {
+func (k *Kubota) getPositions(field, value, subscription string, startDate, endDate time.Time) ([]Position, error) {
 	// Construct the request URL
 	apiURL := fmt.Sprintf("%s/api/v1/position?%s=%s", k.authentication.Endpoint, field, value)
 	if subscription != "" {

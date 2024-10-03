@@ -1,13 +1,13 @@
 package kis
 
-// kubota represents the Kubota API client.
-type kubota struct {
+// Kubota represents the Kubota API client.
+type Kubota struct {
 	authentication *authentication
 }
 
 // NewKIS creates a new Kubota API client.
-func NewKIS(publicKey, SecretKey, Endpoint string) (*kubota, error) {
-	k := &kubota{}
+func NewKIS(publicKey, SecretKey, Endpoint string) (*Kubota, error) {
+	k := &Kubota{}
 	auth, err := newAuthentication(publicKey, SecretKey, Endpoint)
 	if err != nil {
 		return nil, err

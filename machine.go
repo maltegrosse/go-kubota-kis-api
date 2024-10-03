@@ -26,22 +26,22 @@ type Machine struct {
 }
 
 // GetMachineByMobilePhone retrieves machine information by mobile phone number.
-func (k *kubota) GetMachineByMobilePhone(mobilePhone string, subscription string) (Machine, error) {
+func (k *Kubota) GetMachineByMobilePhone(mobilePhone string, subscription string) (Machine, error) {
 	return k.getMachine("mobilePhone", mobilePhone, subscription)
 }
 
 // GetMachineByUserName retrieves machine information by username.
-func (k *kubota) GetMachineByUserName(userName string, subscription string) (Machine, error) {
+func (k *Kubota) GetMachineByUserName(userName string, subscription string) (Machine, error) {
 	return k.getMachine("userName", userName, subscription)
 }
 
 // GetMachineByMachineUUID retrieves machine information by machine UUID.
-func (k *kubota) GetMachineByMachineUUID(machineUUID string, subscription string) (Machine, error) {
+func (k *Kubota) GetMachineByMachineUUID(machineUUID string, subscription string) (Machine, error) {
 	return k.getMachine("machineUUID", machineUUID, subscription)
 }
 
 // getMachine is a helper function to retrieve machine information based on a given field.
-func (k *kubota) getMachine(field, value, subscription string) (Machine, error) {
+func (k *Kubota) getMachine(field, value, subscription string) (Machine, error) {
 	// Construct the request URL
 	apiURL := fmt.Sprintf("%s/api/v1/machine?%s=%s", k.authentication.Endpoint, field, value)
 	if subscription != "" {

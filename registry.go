@@ -20,22 +20,22 @@ type Registry struct {
 }
 
 // GetRegistryByMobilePhone retrieves registry information by mobile phone number.
-func (k *kubota) GetRegistryByMobilePhone(mobilePhone string, subscription string) (Registry, error) {
+func (k *Kubota) GetRegistryByMobilePhone(mobilePhone string, subscription string) (Registry, error) {
 	return k.getRegistry("mobilePhone", mobilePhone, subscription)
 }
 
 // GetRegistryByUserName retrieves registry information by username.
-func (k *kubota) GetRegistryByUserName(userName string, subscription string) (Registry, error) {
+func (k *Kubota) GetRegistryByUserName(userName string, subscription string) (Registry, error) {
 	return k.getRegistry("userName", userName, subscription)
 }
 
 // GetRegistryByMachineUUID retrieves registry information by machine UUID.
-func (k *kubota) GetRegistryByMachineUUID(machineUUID string, subscription string) (Registry, error) {
+func (k *Kubota) GetRegistryByMachineUUID(machineUUID string, subscription string) (Registry, error) {
 	return k.getRegistry("machineUUID", machineUUID, subscription)
 }
 
 // getRegistry is a helper function to retrieve registry information based on a given field.
-func (k *kubota) getRegistry(field, value, subscription string) (Registry, error) {
+func (k *Kubota) getRegistry(field, value, subscription string) (Registry, error) {
 	// Construct the request URL
 	apiURL := fmt.Sprintf("%s/api/v1/registry?%s=%s", k.authentication.Endpoint, field, value)
 	if subscription != "" {

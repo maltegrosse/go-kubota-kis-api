@@ -19,22 +19,22 @@ type Measure struct {
 }
 
 // GetHistoricalMeasureByMobilePhone retrieves historical measure information by mobile phone number.
-func (k *kubota) GetHistoricalMeasureByMobilePhone(mobilePhone, subscription string, startDate, endDate time.Time) ([]Measure, error) {
+func (k *Kubota) GetHistoricalMeasureByMobilePhone(mobilePhone, subscription string, startDate, endDate time.Time) ([]Measure, error) {
 	return k.getMeasure("mobilePhone", mobilePhone, subscription, startDate, endDate)
 }
 
 // GetHistoricalMeasureByUserName retrieves historical measure information by username.
-func (k *kubota) GetHistoricalMeasureByUserName(userName, subscription string, startDate, endDate time.Time) ([]Measure, error) {
+func (k *Kubota) GetHistoricalMeasureByUserName(userName, subscription string, startDate, endDate time.Time) ([]Measure, error) {
 	return k.getMeasure("userName", userName, subscription, startDate, endDate)
 }
 
 // GetHistoricalMeasureByMachineUUID retrieves historical measure information by machine UUID.
-func (k *kubota) GetHistoricalMeasureByMachineUUID(machineUUID, subscription string, startDate, endDate time.Time) ([]Measure, error) {
+func (k *Kubota) GetHistoricalMeasureByMachineUUID(machineUUID, subscription string, startDate, endDate time.Time) ([]Measure, error) {
 	return k.getMeasure("machineUUID", machineUUID, subscription, startDate, endDate)
 }
 
 // getMeasure is a helper function to retrieve measure information based on a given field.
-func (k *kubota) getMeasure(field, value, subscription string, startDate, endDate time.Time) ([]Measure, error) {
+func (k *Kubota) getMeasure(field, value, subscription string, startDate, endDate time.Time) ([]Measure, error) {
 	// Construct the request URL
 	apiURL := fmt.Sprintf("%s/api/v1/measure?%s=%s", k.authentication.Endpoint, field, value)
 	if subscription != "" {

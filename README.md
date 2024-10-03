@@ -1,4 +1,5 @@
 # Kubota Intelligence Solutions (KIS) API
+
 Golang KIS API bindings.
 
 The Kubota Intelligence Solution (KIS) provides flexible access to machine operation data via their official API.

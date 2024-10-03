@@ -23,17 +23,17 @@ type User struct {
 }
 
 // GetUserByMobilePhone retrieves user information by mobile phone number.
-func (k *kubota) GetUserByMobilePhone(mobilePhone string) (*User, error) {
+func (k *Kubota) GetUserByMobilePhone(mobilePhone string) (*User, error) {
 	return k.getUser("mobilePhone", mobilePhone)
 }
 
 // GetUserByUserName retrieves user information by username.
-func (k *kubota) GetUserByUserName(userName string) (*User, error) {
+func (k *Kubota) GetUserByUserName(userName string) (*User, error) {
 	return k.getUser("userName", userName)
 }
 
 // getUser is a helper function to retrieve user information based on a given field.
-func (k *kubota) getUser(field, value string) (*User, error) {
+func (k *Kubota) getUser(field, value string) (*User, error) {
 	// Construct the request URL
 	apiURL := fmt.Sprintf("%s/api/v1/user?%s=%s", k.authentication.Endpoint, field, value)
 
