@@ -58,7 +58,7 @@ func (k *Kubota) getField(f, value string) ([]Field, error) {
 	// Handle the response
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
-		return nil, fmt.Errorf("error getting field: %s", string(body))
+		return nil, fmt.Errorf("error getting token: %s with statuscode: %s", string(body), string(resp.StatusCode))
 	}
 
 	// Unmarshal the response

@@ -60,7 +60,7 @@ func (k *Kubota) getRegistry(field, value, subscription string) (Registry, error
 	// Handle the response
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
-		return Registry{}, fmt.Errorf("error getting registry: %s", string(body))
+		return Registry{}, fmt.Errorf("error getting token: %s with statuscode: %s", string(body), string(resp.StatusCode))
 	}
 
 	// Unmarshal the response

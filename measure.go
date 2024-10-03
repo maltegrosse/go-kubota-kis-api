@@ -76,7 +76,7 @@ func (k *Kubota) getMeasure(field, value, subscription string, startDate, endDat
 	// Handle the response
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
-		return nil, fmt.Errorf("error getting measure: %s", string(body))
+		return nil, fmt.Errorf("error getting token: %s with statuscode: %s", string(body), string(resp.StatusCode))
 	}
 
 	// Unmarshal the response

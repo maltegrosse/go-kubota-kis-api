@@ -66,7 +66,7 @@ func (k *Kubota) getMachine(field, value, subscription string) (Machine, error) 
 	// Handle the response
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
-		return Machine{}, fmt.Errorf("error getting machine: %s", string(body))
+		return Machine{}, fmt.Errorf("error getting token: %s with statuscode: %s", string(body), string(resp.StatusCode))
 	}
 
 	// Unmarshal the response

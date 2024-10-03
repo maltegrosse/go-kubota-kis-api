@@ -76,7 +76,7 @@ func (k *Kubota) getPosition(field, value, subscription string) (*Position, erro
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
 
-		return &Position{}, fmt.Errorf("error getting position: %s", string(body))
+		return &Position{}, fmt.Errorf("error getting token: %s with statuscode: %s", string(body), string(resp.StatusCode))
 	}
 
 	// Unmarshal the response
@@ -136,7 +136,7 @@ func (k *Kubota) getPositions(field, value, subscription string, startDate, endD
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
 
-		return nil, fmt.Errorf("error getting position: %s", string(body))
+		return nil, fmt.Errorf("error getting token: %s with statuscode: %s", string(body), string(resp.StatusCode))
 	}
 	// Unmarshal the response
 	var positionResponse struct {
