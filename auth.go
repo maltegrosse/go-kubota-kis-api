@@ -85,7 +85,7 @@ func (a *authentication) accessToken() error {
 	// Handle the response
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
-		return fmt.Errorf("error getting token: %s", string(body))
+		return fmt.Errorf("error getting token: %s with statuscode: %s", string(body), string(resp.StatusCode))
 	}
 
 	// Unmarshal the response
