@@ -1,9 +1,8 @@
 # Kubota Intelligence Solutions (KIS) API
 [![GoDoc](https://godoc.org/github.com/maltegrosse/go-kubota-kis-api?status.svg)](https://pkg.go.dev/github.com/maltegrosse/go-kubota-kis-api)
-
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
-
 [![Go Report Card](https://goreportcard.com/badge/github.com/maltegrosse/go-kubota-kis-api)](https://goreportcard.com/report/github.com/maltegrosse/go-kubota-kis-api)
+
 Golang KIS API bindings.
 
 The Kubota Intelligence Solution (KIS) provides flexible access to machine operation data via their official API.
