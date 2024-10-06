@@ -106,7 +106,6 @@ func (k *Kubota) getPositions(field, value, subscription string, startDate, endD
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling start date: %w", err)
 		}
-		fmt.Println(string(ss))
 		apiURL += "&startDate=" + string(ss)
 	}
 	if !endDate.IsZero() {

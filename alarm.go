@@ -45,7 +45,6 @@ func (k *Kubota) getAlarm(field, value, subscription string, startDate, endDate 
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling start date: %w", err)
 		}
-		fmt.Println(string(ss))
 		apiURL += "&startDate=" + string(ss)
 	}
 	if !endDate.IsZero() {
