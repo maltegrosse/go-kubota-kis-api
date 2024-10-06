@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -133,9 +134,11 @@ func (k *Kubota) getPositions(field, value, subscription string, startDate, endD
 
 	// Handle the response
 	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
-
-		return nil, fmt.Errorf("error getting token: %s with statuscode: %s", string(body), string(resp.StatusCode))
+		var errResponse = Error{}
+		if err := json.NewDecoder(resp.Body).Decode(&errResponse); err != nil {
+			return nil, fmt.Errorf("error decoding error response: %w", err)
+		}
+		return nil, fmt.Errorf("error getting token: %s with statuscode: %d, details: %s", errResponse.Title, errResponse.Status,strings.Join(errResponse.Details, ", "))
 	}
 	// Unmarshal the response
 	var positionResponse struct {
