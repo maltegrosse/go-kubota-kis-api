@@ -3,7 +3,6 @@ package kis
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"strings"
 	"time"
@@ -75,9 +74,18 @@ func (k *Kubota) getPosition(field, value, subscription string) (*Position, erro
 
 	// Handle the response
 	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
-
-		return &Position{}, fmt.Errorf("error getting token: %s with statuscode: %s", string(body), string(resp.StatusCode))
+		var errResponse = errorResponse{}
+		if err := json.NewDecoder(resp.Body).Decode(&errResponse); err != nil {
+			return nil, fmt.Errorf("error decoding error response: %w", err)
+		}
+		if resp.StatusCode == http.StatusTooManyRequests {
+			// get the header and retry after the specified time
+			retryAfter := resp.Header.Get("Retry-After")
+			if retryAfter != "" {
+				errResponse.Details = append(errResponse.Details, fmt.Sprintf("Retry-After: %s", retryAfter))
+			}
+		}
+		return nil, fmt.Errorf("error: %s with statuscode: %d, type %s, details: %s", errResponse.Title, errResponse.Status, errResponse.Type, strings.Join(errResponse.Details, ", "))
 	}
 
 	// Unmarshal the response
@@ -134,11 +142,18 @@ func (k *Kubota) getPositions(field, value, subscription string, startDate, endD
 
 	// Handle the response
 	if resp.StatusCode != http.StatusOK {
-		var errResponse = Error{}
+		var errResponse = errorResponse{}
 		if err := json.NewDecoder(resp.Body).Decode(&errResponse); err != nil {
 			return nil, fmt.Errorf("error decoding error response: %w", err)
 		}
-		return nil, fmt.Errorf("error getting token: %s with statuscode: %d, details: %s", errResponse.Title, errResponse.Status,strings.Join(errResponse.Details, ", "))
+		if resp.StatusCode == http.StatusTooManyRequests {
+			// get the header and retry after the specified time
+			retryAfter := resp.Header.Get("Retry-After")
+			if retryAfter != "" {
+				errResponse.Details = append(errResponse.Details, fmt.Sprintf("Retry-After: %s", retryAfter))
+			}
+		}
+		return nil, fmt.Errorf("error: %s with statuscode: %d, type %s, details: %s", errResponse.Title, errResponse.Status, errResponse.Type, strings.Join(errResponse.Details, ", "))
 	}
 	// Unmarshal the response
 	var positionResponse struct {

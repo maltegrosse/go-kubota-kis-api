@@ -3,7 +3,6 @@ package kis
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"sync"
 
@@ -84,8 +83,18 @@ func (a *authentication) accessToken() error {
 
 	// Handle the response
 	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
-		return fmt.Errorf("error getting token: %s with statuscode: %s", string(body), string(resp.StatusCode))
+		var errResponse = errorResponse{}
+		if err := json.NewDecoder(resp.Body).Decode(&errResponse); err != nil {
+			return fmt.Errorf("error decoding error response: %w", err)
+		}
+		if resp.StatusCode == http.StatusTooManyRequests {
+			// get the header and retry after the specified time
+			retryAfter := resp.Header.Get("Retry-After")
+			if retryAfter != "" {
+				errResponse.Details = append(errResponse.Details, fmt.Sprintf("Retry-After: %s", retryAfter))
+			}
+		}
+		return fmt.Errorf("error: %s with statuscode: %d, type %s, details: %s", errResponse.Title, errResponse.Status, errResponse.Type, strings.Join(errResponse.Details, ", "))
 	}
 
 	// Unmarshal the response

@@ -1,7 +1,7 @@
 package kis
 
-// Error represents the Error information returned by the Kubota API.
-type Error struct {
+// errorResponse represents the errorResponse information returned by the Kubota API.
+type errorResponse struct {
 	Type    string   `json:"Type"`
 	Title   string   `json:"Title"`
 	Status  int      `json:"Status"`
